@@ -1,0 +1,53 @@
+/**
+ * GET    => Buscar Informação
+ * POST   => Inserir/Criar uma informação
+ * PUT    => Alterar uma informação
+ * DELETE => Remover um dado
+ * PATCH  => Alterar uma informação especifica
+ */
+
+/**
+ * Tipo de parâmetros
+ * Routes Params  =>  http://localhost:3000/produtos/9187341289 <-id
+ * Query Params   =>  http://localhost:3000/produtos/name=teclado&cor=preto
+ * 
+ * Body Params    =>  {
+ *  "name": "teclado",
+ *  "description": "teclado bom"
+ * }
+ */
+
+
+ app.get("/teste", (request, response) => {
+  return response.send("Olá Carai")
+})
+
+app.post("/teste-post", (request, response) => {
+  return response.send("Olá Post Carai")
+})
+
+CreateUserController with try-catch
+
+import { Request, Response } from 'express'
+import { CreateUserService } from '../services/CreateUserServices'
+
+
+class CreateUserController {
+  async handle(request: Request, response: Response) {
+    try {
+      const { name, email, admin } = request.body
+
+      const createUserService = new CreateUserService()
+
+      const user = await createUserService.execute({ name, email, admin })
+
+      return response.json(user)
+
+    } catch (err) {
+        return response.status(400).json({ error: err.message})
+    }
+    
+  }
+}
+
+export { CreateUserController }
